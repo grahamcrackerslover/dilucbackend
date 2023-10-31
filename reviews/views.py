@@ -10,19 +10,18 @@ from rest_framework.response import Response
 # Create your views here.
 @api_view(['POST'])
 def add_review(request):
-    review_code = request.data.get('review_code')
+    review_code = request.data.get('code_used')
     try:
         purchase = Purchase.objects.get(review_code=review_code)
     except Purchase.DoesNotExist:
         return Response({"error": "Invalid review code"}, status=400)
 
-    # Make sure the review is only added once per purchase
-    if Review.objects.filter(item=purchase.item).exists():
-        return Response({"error": "Review already submitted for this purchase"}, status=400)
-
     review_data = request.data.copy()
-    review_data['item'] = purchase.item.id
+    # review_data['item'] = purchase.item.id
     review_serializer = ReviewSerializer(data=review_data)
+    if Review.objects.filter(code_used=review_data['code_used']).exists():
+        return Response({"error": "Review code already used"}, status=400)
+
     if review_serializer.is_valid():
         review_serializer.save()
         return Response(review_serializer.data, status=201)
