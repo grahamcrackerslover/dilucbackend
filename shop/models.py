@@ -26,5 +26,5 @@ def generate_review_code():
 
 class Purchase(models.Model):
     item = models.ForeignKey(Item, on_delete=models.CASCADE)
-    review_code = models.UUIDField(default=generate_review_code, unique=True, editable=False)
+    review_code = models.CharField(default=generate_review_code, unique=True, editable=False, max_length=8)
     created_at = models.DateTimeField(auto_now_add=True)
