@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-$%=kc60q&+!9awoc_ey#9m75fxskhq%gma2vi(jaak=f1brb8w
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["https://api.diluc.store"]
+ALLOWED_HOSTS = ["api.diluc.store"]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "https://diluc.store",
