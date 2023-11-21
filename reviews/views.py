@@ -44,7 +44,7 @@ def list_reviews(request):
     # Проверяем есть ли отзывы (надо будет заменить на какой-то код, чтобы
     # фронтенд понимал, есть ли еще отзывы и убирал кнопку
     if not queryset:
-        return Response({"error": "No reviews found"}, status=404)
+        return Response({"error": "No reviews found"}, status=200)
 
     serializer = ReviewSerializer(queryset, many=True)
 

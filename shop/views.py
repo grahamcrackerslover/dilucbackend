@@ -18,8 +18,9 @@ def list_items(request):
 def buy_item(request):
     try:
         item_id = request.data['item_id']
+        genshin_uid = request.data['genshin_uid']
         item = Item.objects.get(id=item_id)
-        purchase = Purchase.objects.create(item=item)
+        purchase = Purchase.objects.create(item=item, genshin_uid=genshin_uid)
 
         # TODO add verification and order completion
         return Response({'message': 'Покупка совершена успешно', 'review_code': purchase.review_code}, status=200)
