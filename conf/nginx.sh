@@ -11,12 +11,35 @@ check_nginx_installed() {
     fi
 }
 
+# Function to setup UFW firewall rules
+setup_ufw() {
+    echo "Setting up UFW rules..."
+
+    # Check if UFW is installed, install if it isn't
+    if ! command -v ufw &> /dev/null; then
+        echo "UFW is not installed. Installing UFW..."
+        sudo apt-get install ufw -y
+    fi
+
+    # Enable UFW if it's not active
+    if ! sudo ufw status | grep -qw active; then
+        sudo ufw enable
+    fi
+
+    # Allow traffic for Nginx (HTTP and HTTPS)
+    sudo ufw allow "Nginx Full"
+    echo "UFW is configured to allow HTTP and HTTPS traffic for Nginx."
+}
+
 # Prompt for server name
 read -r -p "Enter the server name (e.g., yourdomain.com www.yourdomain.com): " server_name
 
 # Prompt for proxy pass with default value
-read -p "Enter the proxy pass [default: http://localhost:8000]: " proxy_pass
+read -r -p "Enter the proxy pass [default: http://localhost:8000]: " proxy_pass
 proxy_pass=${proxy_pass:-http://localhost:8000}
+
+#Configure UFW
+setup_ufw
 
 # Check and install Nginx if necessary
 check_nginx_installed
