@@ -38,11 +38,11 @@ read -r -p "Enter the server name (e.g., yourdomain.com www.yourdomain.com): " s
 read -r -p "Enter the proxy pass [default: http://localhost:8000]: " proxy_pass
 proxy_pass=${proxy_pass:-http://localhost:8000}
 
-#Configure UFW
-setup_ufw
-
 # Check and install Nginx if necessary
 check_nginx_installed
+
+#Configure UFW
+setup_ufw
 
 # Create the Nginx configuration file
 cat << EOF > website.conf
